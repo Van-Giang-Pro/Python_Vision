@@ -8,7 +8,7 @@ decode_object = pyzbar.decode(img_gray)
 for decode in decode_object:
     # Nó có kiểu dữ liệu là list bên trong chứa object
     text = decode.data.decode("utf-8")
-    # Xài cái UTF để giải mà kiểu byte ra string theo định dạng utf-8
+    # Xài cái UTF để giải mã kiểu byte ra string theo định dạng utf-8
     qr_type = decode.type
     rect = decode.rect
     points = decode.polygon
