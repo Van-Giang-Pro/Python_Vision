@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 arrow_length = 50
-img = cv2.imread("Images/12 Tab Defect.bmp")
+img = cv2.imread("../Images/12 Tab Defect.bmp")
 # x, y, w, h = 200, 260, 60, 60
 # roi = img[y:y+h, x:x+w]
 # Ta có y đứng trước là ảnh là mảng NumPy, img là kiểu dữ liệu NumPy

@@ -5,7 +5,7 @@ import numpy as np
 import pytesseract as ptr
 
 ptr.pytesseract.tesseract_cmd = r'C:\Users\fs120806\AppData\Local\Programs\Tesseract OCR\tesseract.exe'
-img = cv2.imread("Images/License Plate 1.png")
+img = cv2.imread("../Images/License Plate 1.png")
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 gaussian_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 edged = cv2.Canny(gaussian_blur, 75, 200)

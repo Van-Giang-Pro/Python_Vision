@@ -24,6 +24,7 @@ try:
     camera.LineMode.Value = "Input"
     camera.LineSelector.Value = "Line4"
     camera.LineMode.Value = "Output"
+    camera.LineSource.Value = "UserOutput3"
     camera.ExposureAuto.Value = "Off"
     camera.ExposureTime.Value = 100000
     # camera.ExposureAuto.Value = "Off"
@@ -45,11 +46,21 @@ try:
             img_blur = cv2.GaussianBlur(img_gray, (3, 3), 0)
             decode_object = pyzbar.decode(img_blur)
             print(decode_object)
-            for object in decode_object:
-                text = object.data.decode("utf-8") # Xài cái UTF để giải mã kiểu byte ra string theo định dạng utf-8
-                polygon = np.array([(p.x, p.y) for p in decode_object[0].polygon]) # Dùng cách này gọi là list comprehension tạo ra tuple và đưa vào array
-                cv2.drawContours(resized_image, [polygon], 0, (0, 255, 0), 2)
-            cv2.putText(resized_image, text, (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+            if decode_object:
+                for object in decode_object:
+                    text = object.data.decode("utf-8") # Xài cái UTF để giải mã kiểu byte ra string theo định dạng utf-8
+                    polygon = np.array([(p.x, p.y) for p in decode_object[0].polygon]) # Dùng cách này gọi là list comprehension tạo ra tuple và đưa vào array
+                    cv2.drawContours(resized_image, [polygon], 0, (0, 255, 0), 2)
+                    cv2.putText(resized_image, text, (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+                camera.LineSelector.Value = "Line4"
+                camera.UserOutputValue.Value = True
+                status = camera.LineStatus.Value
+                print("Trạng thái ngõ ra pin 3 line 4 : ", status)
+                time.sleep(1)
+                camera.LineSelector.Value = "Line4"
+                camera.UserOutputValue.Value = False
+                status = camera.LineStatus.Value
+                print("Trạng thái ngõ ra pin 3 line 4 : ", status)
             cv2.imshow("Resized Image", resized_image)
             cv2.imshow("QR Code", resized_image)
             if cv2.waitKey(1) & 0xFF == ord('q'):

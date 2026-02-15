@@ -3,7 +3,7 @@ import cv2.data
 import numpy as np
 
 # Đọc ảnh
-img = cv2.imread('Images/Friends.jpeg')
+img = cv2.imread('../Images/Friends.jpeg')
 #Kiểm tra ảnh đã được đọc thành công hay chưa
 if  img is None:
     print("Không tìm thấy ảnh")

@@ -1,7 +1,7 @@
 import cv2
 
 from pygments.formatters import img
-img = cv2.imread("Images/Friends.jpeg")
+img = cv2.imread("../Images/Friends.jpeg")
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # Hiển thị cửa sổ
 # Ta có Window Normal cho phép cửa sổ được điều chỉnh kích thước

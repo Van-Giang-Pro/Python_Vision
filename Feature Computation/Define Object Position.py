@@ -32,7 +32,7 @@ Tương tự : Tọa độ y trung tâm = (Tổng momen theo chiều dọc) / (T
 Ý nghĩa : Đây là tọa độ y trung bình của cả nhóm
 """
 
-img = cv2.imread('Images/Image 1.png')
+img = cv2.imread('../Images/Image 1.png')
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 retval, img_binary = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY_INV)
 cv2.imshow('Binary Image', img_binary)

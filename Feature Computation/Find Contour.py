@@ -1,6 +1,6 @@
 import cv2
 
-img = cv2.imread('Images/Hex Nut.png')
+img = cv2.imread('../Images/Hex Nut.png')
 img_resize = cv2.resize(img, (400, 400))
 img_gray = cv2.cvtColor(img_resize, cv2.COLOR_BGR2GRAY)
 img_blur = cv2.GaussianBlur(img_gray, (7, 7), 0)

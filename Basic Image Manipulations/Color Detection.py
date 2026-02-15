@@ -12,7 +12,7 @@ Giá trị thấp (gần 0%) : Khi bạn giảm độ sáng của đèn, căn ph
 Màu đỏ của bạn cũng tối đi và cuối cùng trở thành màu đen. Nó mất đi độ sáng.
 """
 
-img = cv2.imread('Images/Shapes With Color.png', 1)
+img = cv2.imread('../Images/Shapes With Color.png', 1)
 img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 lower_red = np.array([20, 100, 100]) # Ta có np.array giống như cái khay đựng trứng chỉ chứa các con số thôi
 upper_red = np.array([30, 255, 255])

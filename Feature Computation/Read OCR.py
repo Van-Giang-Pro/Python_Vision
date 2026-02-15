@@ -3,7 +3,7 @@ import cv2
 import re # Module này dùng để thay thế một phần chuổi bằng một phần khác
 
 ptr.pytesseract.tesseract_cmd = r'C:\Users\fs120806\AppData\Local\Programs\Tesseract OCR\tesseract.exe'
-img = cv2.imread('Images/Text.png')
+img = cv2.imread('../Images/Text.png')
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 retval, img_binary = cv2.threshold(img_gray, 160, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 cv2.imshow('Image', img_binary)

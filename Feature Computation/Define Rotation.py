@@ -3,7 +3,7 @@ import numpy as np
 import math
 
 arrow_length = 50
-img = cv2.imread('Images/12 Tab Defect.bmp')
+img = cv2.imread('../Images/12 Tab Defect.bmp')
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0)
 retval, img_binary = cv2.threshold(img_blur, 80, 255, cv2.THRESH_BINARY)

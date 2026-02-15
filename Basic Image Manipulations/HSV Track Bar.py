@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread('Images/Shapes With Color.png', 1)
+img = cv2.imread('../Images/Shapes With Color.png', 1)
 img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 def call_back(x):
     pass

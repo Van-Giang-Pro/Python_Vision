@@ -2,7 +2,7 @@ import cv2
 import pyzbar.pyzbar as pyzbar # Thư viên dùng để đọc barcode
 import numpy as np
 
-img = cv2.imread('Images/QR Code.png')
+img = cv2.imread('../Images/QR Code.png')
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 decode_object = pyzbar.decode(img_gray)
 for decode in decode_object:

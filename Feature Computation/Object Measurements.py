@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("Images/Iphone 15.jpg")
+img = cv2.imread("../Images/Iphone 15.jpg")
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 img_blur = cv2.GaussianBlur(img_gray, (5, 5), sigmaX=0)
 actual_object_length = 147.6

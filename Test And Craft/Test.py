@@ -12,7 +12,7 @@ def fill_holes(binary):
     flood_inv = cv2.bitwise_not(flood)
     return cv2.bitwise_or(binary, flood_inv)
 
-img = cv2.imread("Images/Test 1.png")
+img = cv2.imread("../Images/Test 1.png")
 if img is None:
     raise FileNotFoundError("Không đọc được ảnh")
 
