@@ -3,6 +3,34 @@ from pypylon import pylon
 import numpy as np
 import pyzbar.pyzbar as pyzbar # Thư viện để đọc mã QR và Barcode
 from sympy.core.sympify import converter
+import time
+
+pulse_off_at = 0.0
+pulse_duration = 1
+output_is_on = False
+seen_last_frame = False
+
+def pulse_start():
+    global pulse_off_at, output_is_on
+    if not output_is_on:
+        camera.LineSelector.Value = "Line4"
+        camera.UserOutputValue.Value = True
+        output_is_on = True
+        pulse_off_at = time.perf_counter() + pulse_duration
+        status = camera.UserOutputValue.GetValue()
+        print("Line 4 Status: ", status)
+        print("Pulse started")
+
+def pulse_stop():
+    global output_is_on, pulse_off_at
+    if output_is_on and time.perf_counter() >= pulse_off_at:
+        camera.LineSelector.Value = "Line4"
+        camera.UserOutputValue.Value = False
+        output_is_on = False
+        pulse_off_at = 0.0
+        status = camera.UserOutputValue.GetValue()
+        print("Line 4 Status : ", status)
+        print("Pulse stopped")
 
 define_frame_width = 800
 try:
@@ -31,6 +59,7 @@ try:
     while camera.IsGrabbing():
         grab_result = camera.RetrieveResult(5000, pylon.TimeoutHandling_ThrowException)
         input_status = camera.LineStatus.Value
+        pulse_stop()
         if input_status:
             print("Input Signal Detected")
         else:
@@ -45,26 +74,21 @@ try:
             img_gray = cv2.cvtColor(resized_image, cv2.COLOR_BGR2GRAY)
             img_blur = cv2.GaussianBlur(img_gray, (3, 3), 0)
             decode_object = pyzbar.decode(img_blur)
-            print(decode_object)
             if decode_object:
                 for object in decode_object:
                     text = object.data.decode("utf-8") # Xài cái UTF để giải mã kiểu byte ra string theo định dạng utf-8
-                    polygon = np.array([(p.x, p.y) for p in decode_object[0].polygon]) # Dùng cách này gọi là list comprehension tạo ra tuple và đưa vào array
+                    polygon = np.array([(p.x, p.y) for p in object.polygon]) # Dùng cách này gọi là list comprehension tạo ra tuple và đưa vào array
                     cv2.drawContours(resized_image, [polygon], 0, (0, 255, 0), 2)
-                    cv2.putText(resized_image, text, (0, 40), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
-                camera.LineSelector.Value = "Line4"
-                camera.UserOutputValue.Value = True
-                status = camera.LineStatus.Value
-                print("Trạng thái ngõ ra pin 3 line 4 : ", status)
-                time.sleep(1)
-                camera.LineSelector.Value = "Line4"
-                camera.UserOutputValue.Value = False
-                status = camera.LineStatus.Value
-                print("Trạng thái ngõ ra pin 3 line 4 : ", status)
-            cv2.imshow("Resized Image", resized_image)
-            cv2.imshow("QR Code", resized_image)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+                    x, y = polygon[0]
+                    cv2.putText(resized_image, text, (int(x), int(y) - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2, cv2.LINE_AA)
+            seen_now = bool(decode_object)
+            if seen_now and not seen_last_frame:
+                pulse_start()
+            seen_last_frame = seen_now
+        cv2.imshow("Resized Image", resized_image)
+        cv2.imshow("QR Code", resized_image)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
             grab_result.Release()
 except pylon.GenericException as e:
     print("Đã xảy ra lỗi : ", e)
