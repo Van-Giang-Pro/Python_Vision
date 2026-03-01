@@ -97,7 +97,7 @@ class App(QMainWindow): # Đây không phải là 1 tòa nhà thật sự, đây
                 return
             # Chuyển đổi BGR sang RGB cho QT Creator
             frame_rgb = cv2.cvtColor(color_image, cv2.COLOR_BGR2RGB)
-            # h, w, ch = frame_rgb.shape
+            h, w, ch = frame_rgb.shape
             # bytes_per_line = ch * w
             # Nếu ảnh có độ phân giải chuẩn như 640, 1280 thì nó sẽ không thêm padding vô đâu nên xài công thức  ch * w là được rồi
             # Vì như 641 nhân 3 thì sẽ lẻ không chia hết cho 4 nên nó thêm padding để chia hết cho 4 nên ch * w là có thể sẽ sai
@@ -117,7 +117,3 @@ if __name__ == '__main__':
     mainWindow = App()
     mainWindow.show()
     sys.exit(app.exec())
-
-"""
-
-"""
