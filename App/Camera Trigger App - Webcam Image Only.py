@@ -4,7 +4,7 @@ from PyQt6.uic import loadUi
 from PyQt6.QtGui import QPixmap, QImage
 import cv2
 
-base_dir = os.path.join(os.path.dirname(__file__), 'Basler Camera Trigger App UI.ui')
+base_dir = os.path.join(os.path.dirname(__file__), 'Webcam Trigger App.ui')
 # Ta có __file__ là một biến đặc biệt trong Python, nó chứa đường dẫn tuyệt đối đến tệp Python hiện tại đang được thực thi.
 
 class App(QMainWindow): # Đây không phải là 1 tòa nhà thật sự, đây chỉ là một bản thiết kế
@@ -36,7 +36,7 @@ class App(QMainWindow): # Đây không phải là 1 tòa nhà thật sự, đây
             # Chuyển BGR (OpenCV) sang RGB (Qt)
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             h, w, ch = frame_rgb.shape
-            bytes_per_line = ch * w
+            bytes_per_line = ch * w # Mỗi pixel có 3 kênh tương ứng với mỗi kênh 1 byte
             q_image = QImage(frame_rgb.data, w, h, bytes_per_line, QImage.Format.Format_RGB888) # Ba số 8 là byte per channel
             # Hiển thị lên QLabel
             pixmap = QPixmap.fromImage(q_image) # Convert ảnh thành pixmap
